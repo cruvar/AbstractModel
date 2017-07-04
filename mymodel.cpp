@@ -69,31 +69,23 @@ Qt::ItemFlags MyModel::flags(const QModelIndex &index) const
     } return flags;
 }
 
-void MyModel::appendCode(const QString &zcode, const QString &zcodemin, const QString &zcodemax)
+void MyModel::addRow()
 {
     CodeData code;
-    code[ ZoneCode ] = zcode;
-    code[ ZoneCodeMin ] = zcodemin;
-    code[ ZoneCodeMax ] = zcodemax;
-    code[ Result ] = false;
+    code[ ZoneCode ] = 0;
+    code[ ZoneCodeMin ] = 0;
+    code[ ZoneCodeMax ] = 0;
+    code[ Result ] = 0;
     int row = m_codes.count();
     beginInsertRows( QModelIndex(), row, row );
     m_codes.append( code );
     endInsertRows();
 }
 
-void MyModel::removeSelected()
+void MyModel::delRow()
 {
-    int i = 0;
-    Codes::iterator it = m_codes.begin();
-    while( it != m_codes.end() ) {
-        if( it->value( Result, false ).toBool() ) {
-            beginRemoveRows( QModelIndex(), i, i );
-            it = m_codes.erase( it );
-            endRemoveRows();
-        } else {
-            ++i;
-            ++it;
-        }
-    }
+    int it = m_codes.count() - 1;
+    beginRemoveRows(QModelIndex(), it, it);
+    m_codes.removeAt(it);
+    endRemoveRows();
 }

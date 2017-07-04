@@ -18,10 +18,10 @@ public:
     QVariant headerData( int section, Qt::Orientation orientation, int role ) const;
     Qt::ItemFlags flags( const QModelIndex& index ) const;
 
-    void appendCode(const QString& zcode, const QString& zcodemin, const QString& zcodemax );
+    void addRow();
 
 public slots:
-    void removeSelected();
+    void delRow();
 
 private:
     enum Column {

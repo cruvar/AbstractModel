@@ -37,22 +37,13 @@ void MainWindow::initAddRowWidget()
     {
         widAddRow->setLayout(new QHBoxLayout);
 
-        widAddRow->layout()->addWidget(new QLabel(tr("ZoneCode:")));
-        widAddRow->layout()->addWidget(leSurname = new QLineEdit(widAddRow));
-        widAddRow->layout()->addWidget(new QLabel(tr("Zone Height[min]")));
-        widAddRow->layout()->addWidget(leName = new QLineEdit(widAddRow));
-        widAddRow->layout()->addWidget(new QLabel(tr("Zone Height[max]:")));
-        widAddRow->layout()->addWidget(lePatronymic = new QLineEdit(widAddRow));
+        QPushButton *btnAdd = new QPushButton(tr("Add"),widAddRow);
+        connect(btnAdd,&QPushButton::clicked,model,&MyModel::addRow);
+        widAddRow->layout()->addWidget(btnAdd);
 
-        QPushButton *btnAppend = new QPushButton(tr("Add"),widAddRow);
-        connect(btnAppend,&QPushButton::clicked,this,[=]{
-            model->appendCode(leSurname->text(), leName->text(), lePatronymic->text());
-        });
-        widAddRow->layout()->addWidget(btnAppend);
-
-        QPushButton *btnDelete = new QPushButton(tr("Delete"),widAddRow);
-        connect(btnDelete,&QPushButton::clicked,model,&MyModel::removeSelected);
-        widAddRow->layout()->addWidget(btnDelete);
+        QPushButton *btnDel = new QPushButton(tr("Delete"),widAddRow);
+        connect(btnDel,&QPushButton::clicked,model,&MyModel::delRow);
+        widAddRow->layout()->addWidget(btnDel);
     }
     centralWidget()->layout()->addWidget(widAddRow);
 }
