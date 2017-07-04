@@ -32,17 +32,10 @@ bool MyModel::setData(const QModelIndex &index, const QVariant &value, int role)
         return false; }
 
     m_codes[index.row()][Column(index.column())] = value;
-    if (index.column() == ZoneCodeMin) {
-        zcMin = value.toDouble();
-        m_codes[index.row()][Column(Result)] = calculate();
-    }
 
-    if (index.column() == ZoneCodeMax) {
-        zcMax = value.toDouble();
-        m_codes[index.row()][Column(Result)] = calculate();
-    }
+    calculateAverage(index.row());
 
-    emit dataChanged( index, index );
+    emit dataChanged(index, index);
     return true;
 }
 
@@ -99,4 +92,11 @@ void MyModel::delRow()
     beginRemoveRows(QModelIndex(), it, it);
     m_codes.removeAt(it);
     endRemoveRows();
+}
+
+void MyModel::calculateAverage(int row)
+{
+    double zcMin = m_codes[row][Column(ZoneCodeMin)].toDouble();
+    double zcMax = m_codes[row][Column(ZoneCodeMax)].toDouble();
+    m_codes[row][Column(Result)] = (zcMin + zcMax)/2;
 }

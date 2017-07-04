@@ -4,8 +4,6 @@
 #include <QAbstractTableModel>
 #include <QVariant>
 
-#include <math.h>
-
 class MyModel : public QAbstractTableModel
 {
     Q_OBJECT
@@ -25,8 +23,7 @@ public slots:
     void delRow();
 
 private:
-
-    double calculate() { return (zcMin + zcMax)/2; }
+    void calculateAverage(int row);
 
     enum Column {
         ZoneCode = 0,
@@ -34,9 +31,6 @@ private:
         ZoneCodeMax,
         Result,
         LAST };
-
-    double zcMin = 0.0;
-    double zcMax = 0.0;
 
     typedef QHash<Column, QVariant> CodeData;
     typedef QList<CodeData> Codes;
